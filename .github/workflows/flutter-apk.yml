@@ -1,0 +1,57 @@
+name: Build Flutter Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "flutter_app/**"
+      - ".github/workflows/flutter-apk.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-flutter-apk:
+    name: Build EditFlow Flutter APK
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter_app
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Generate Android project
+        run: flutter create --platforms=android --org com.editflow .
+
+      - name: Install Flutter packages
+        run: flutter pub get
+
+      - name: Build Android APK
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          flutter build apk --release \
+            --dart-define=SUPABASE_URL="$SUPABASE_URL" \
+            --dart-define=SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: EditFlow-Flutter-APK
+          path: flutter_app/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 14
