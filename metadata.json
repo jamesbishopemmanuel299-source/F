@@ -1,0 +1,8 @@
+{
+  "name": "EDITFLOW AI - AI Video, Music & Image Studio",
+  "description": "Professional all-in-one AI creative platform with Supabase backend (Auth, Database & Cloud Storage): CapCut-style multi-track video editor, KIE AI model discovery, AI Music Studio with voice recording, AI Music Videos, AI Image & Voice Studios.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
