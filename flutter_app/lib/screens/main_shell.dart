@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'projects_page.dart';
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
@@ -19,7 +20,7 @@ class _MainShellState extends State<MainShell> {
       _HomePage(onOpen: (i) => setState(() => _index = i)),
       const _FeaturePage(icon: Icons.movie_edit, title: 'Video editor', description: 'The native multi-track editor is being built here. Import video, arrange clips, add audio, titles, transitions and export your finished video.'),
       const _FeaturePage(icon: Icons.auto_awesome, title: 'AI studio', description: 'Native AI image, video, music and voice creation will connect to your existing secure generation backend.'),
-      const _FeaturePage(icon: Icons.folder_copy_outlined, title: 'Your projects', description: 'Your saved projects and media library will appear here after the project database integration is completed.'),
+      const ProjectsPage(),
       _ProfilePage(),
     ];
     return Scaffold(
